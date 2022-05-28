@@ -1,13 +1,14 @@
 const axios = require("axios");
 const https = require('https');
-exports.home = (req,res, next)=>{
+exports.home = (req, res, next) => {
     res.render('home', {
         display: 'block',
         img: 'images/android_dialer_FILL0_wght700_GRAD0_opsz48.svg',
     });
 }
-exports.iid = async (req,res, next)=>{
+exports.iid = async (req, res, next) => {
     var registerf = req.body.registerf;
+
     function removeVietnameseTones(str) {
         str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
         str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -30,6 +31,7 @@ exports.iid = async (req,res, next)=>{
         str = str.replace(/q|w|e|r|t|y|u|i|o|p|a|s|d|f|g|h|j|k|l|z|x|c|v|b|n|m/g, "");
         return str;
     }
+
     var iid = removeVietnameseTones(registerf);
     console.log(iid);
     try {
@@ -40,13 +42,30 @@ exports.iid = async (req,res, next)=>{
             });
             resp.on('end', () => {
                 console.log(data);
-                res.render('home',{cid:data, messageCID: "Your confirmation ID is located below", img: 'images/done.svg'});
+                if (data == 'Exceeded IID.' || data == 'Wrong IID.' || data == 'Blocked IID.' || data == 'Not legimate key. Maybe blocked.' || data == 'Sorry, API Token cannot be empty.' || data == 'Sorry, your API Token does not exist.' || data == 'Your IP reach request limit.' || data == 'Your IP is being locked.' || data == 'Your IID reach request limit.' || data == 'Your IID is being locked.' || data == 'Sorry, your API Token has been used 5/5 times.') {
+                    res.render('home', {
+                        alert: '<div class="alert-danger" style="width: fit-content; margin: auto; padding: 10px; border-radius: 10px">\n' +
+                            `<h1>${data}</h1>\n` +
+                            '            </div>',
+                        iid: iid,
+                        cid: data,
+                        messageCID: "Your confirmation ID is located below",
+                        img: 'images/done.svg'
+                    });
+                } else {
+                    let cid = data.slice(0,6) + " " + data.slice(6,12) + " "+ data.slice(12,18) + " "+ data.slice(18,24) + " "+ data.slice(24,30) + " "+ data.slice(30,36) + " "+ data.slice(36,42)+ " "+ data.slice(42,data.length);
+                    res.render('home', {
+                        iid: iid,
+                        cid: cid,
+                        messageCID: "Your confirmation ID is located below",
+                        img: 'images/done.svg'
+                    });
+                }
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
-    }
-    catch (e) {
+    } catch (e) {
         res.json("server mất kết nối mạng")
     }
 }
