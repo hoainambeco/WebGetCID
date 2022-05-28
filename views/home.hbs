@@ -1,24 +1,52 @@
-<div class="container-fluid text-center">
+<div class="container-fluid text-center" style="width: 100%; height: 100%; justify-content: center;justify-items: center; align-items: center;align-content: center">
     <style>
-        img {
-            margin: 10px;
+        .imglogo {
+            margin-left: 50px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 110px;
+            height: 30px;
         }
     </style>
-    <img src="images/android_dialer_FILL0_wght700_GRAD0_opsz48.svg" alt="phone" width="100px">
-    <h1>Phone Activation Center</h1>
-    <p>Supported Licenses</p>
-    <img src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31" alt="">
-    <img src="images/office.png" alt="" style="width: 216px;height: 46px;">
-    <form method="post">
-        {{#if message}}
-            <label for="message" class="text-danger my-1">{{message}}</label>
+    <script>
+        function show_login() {
+            document.getElementById('alerButtom').style.display = "block";
+            setTimeout(function () {
+                document.getElementById('fromInPut').style.display = "none";
+            }, 3000);
+        }
+    </script>
+    <div class="text-center" style="width: fit-content; margin: auto; display: contents">
+        <img src="{{img}}" alt="phone" width="150px">
+        <h1>Phone Activation Center</h1>
+        {{#if messageCID}}
+            <div class="alert-success" style="width: fit-content; margin: auto; padding: 10px; border-radius: 10px">
+                <h1>Successfully Authenticated</h1>
+                <p>Your installation ID was accepted and approved</p>
+            </div>
+        {{else}}
+            <div>
+                <p>Supported Licenses</p>
+                <img class="imglogo" src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31" alt="">
+                <img class="imglogo" src="images/office.png" alt="">
+            </div>
         {{/if}}
-        <input type="text" name="registerf" placeholder="Installation ID" required="required"  class="col-5 col-auto"/>
-        <Button type="submit" class="btn btn-primary btn-block btn-large">
-            Submit
-        </Button>
-    </form>
-    {{#if cid}}
-        <input type="text" name="registerf" required="required" class="col-5 col-auto" value="{{cid}}"/>
-    {{/if}}
+        <form method="post" style="margin-top: 30px; display: {{display}}" id="fromInPut">
+            {{#if message}}
+                <label for="message" class="text-danger my-1">{{message}}</label>
+            {{/if}}
+            <label for="message" class="text-success my-1">Installation ID</label>
+            <input type="text" name="registerf" placeholder="Installation ID" required="required"  class="col-12 col-xl-4 col-md-12 col-lg-12 col-sm-12"/>
+            <label for="message" class="text-success my-1" id="alerButtom" style="display: none">Requesting activation token from microsoft</label>
+            <Button type="submit" class="btn btn-primary btn-block btn-large my-2" onclick="show_login()">
+                Submit
+            </Button>
+        </form>
+        {{#if cid}}
+            <div style=" margin: auto">
+                <label for="message" class="text-success my-1 col-12 col-xl-8 col-md-12 col-lg-12 col-sm-12 my-2">{{messageCID}}</label>
+                <input type="text" name="registerf" required="required"  class="col-12 col-xl-4 col-md-12 col-lg-12 col-sm-12 my-2" value="{{cid}}"/>
+            </div>
+        {{/if}}
+    </div>
 </div>

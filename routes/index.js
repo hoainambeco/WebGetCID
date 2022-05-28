@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var AuthMiddleware = require('../middleware/auth.midllware')
 const user = {
-  userNam: 'nam',
-  password: 'nam'
+  userNam: 'hello123',
+  password: 'ABC1233'
 };
 /* GET home page. */
 router.get('/',AuthMiddleware.ChuaDangNhap, function(req, res, next) {

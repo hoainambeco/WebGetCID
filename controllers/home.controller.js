@@ -1,7 +1,10 @@
 const axios = require("axios");
 const https = require('https');
 exports.home = (req,res, next)=>{
-    res.render('home');
+    res.render('home', {
+        display: 'block',
+        img: 'images/android_dialer_FILL0_wght700_GRAD0_opsz48.svg',
+    });
 }
 exports.iid = async (req,res, next)=>{
     var registerf = req.body.registerf;
@@ -30,14 +33,15 @@ exports.iid = async (req,res, next)=>{
     var iid = removeVietnameseTones(registerf);
     console.log(iid);
     try {
-        https.get(`https://getcid.info/api/${iid}/12a3p1q0m0g`, (resp) => {
+        // https.get(`https://getcid.info/api/${iid}/12a3p1q0m0g`, (resp) => {
+        https.get(`https://getcid.info/api/${iid}/bqtpitvn`, (resp) => {
             let data = '';
             resp.on('data', (chunk) => {
                 data += chunk;
             });
             resp.on('end', () => {
                 console.log(data);
-                res.render('home',{cid:data});
+                res.render('home',{cid:data, messageCID: "Your confirmation ID is located below", img: 'images/done.svg'});
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
