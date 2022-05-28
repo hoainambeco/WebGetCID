@@ -33,8 +33,7 @@ exports.iid = async (req,res, next)=>{
     var iid = removeVietnameseTones(registerf);
     console.log(iid);
     try {
-        // https.get(`https://getcid.info/api/${iid}/12a3p1q0m0g`, (resp) => {
-        https.get(`https://getcid.info/api/${iid}/bqtpitvn`, (resp) => {
+        https.get(`https://getcid.info/api/${iid}/12a3p1q0m0g`, (resp) => {
             let data = '';
             resp.on('data', (chunk) => {
                 data += chunk;
