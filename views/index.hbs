@@ -1,0 +1,20 @@
+<div class="login">
+    <h1>Login</h1>
+    <form action="/login" method="post" autocomplete="off">
+        <label for="username" class="text-danger my-1">{{error}}</label>
+        <input type="text" name="loginusername" id="usernameinput" placeholder="Username" required="required"/>
+        <input
+                type="password"
+                name="loginpassword"
+                id="passwordinput"
+                placeholder="Password"
+                required="required"
+        />
+        {{#if message}}
+            <label for="message" class="text-danger my-1">{{message}}</label>
+        {{/if}}
+        <button type="submit" class="btn btn-primary btn-block btn-large">
+            Đăng nhập
+        </button>
+    </form>
+</div>

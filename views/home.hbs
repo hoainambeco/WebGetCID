@@ -1,0 +1,24 @@
+<div class="container-fluid text-center">
+    <style>
+        img {
+            margin: 10px;
+        }
+    </style>
+    <img src="images/android_dialer_FILL0_wght700_GRAD0_opsz48.svg" alt="phone" width="100px">
+    <h1>Phone Activation Center</h1>
+    <p>Supported Licenses</p>
+    <img src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31" alt="">
+    <img src="images/office.png" alt="" style="width: 216px;height: 46px;">
+    <form method="post">
+        {{#if message}}
+            <label for="message" class="text-danger my-1">{{message}}</label>
+        {{/if}}
+        <input type="text" name="registerf" placeholder="Installation ID" required="required"  class="col-5 col-auto"/>
+        <Button type="submit" class="btn btn-primary btn-block btn-large">
+            Submit
+        </Button>
+    </form>
+    {{#if cid}}
+        <input type="text" name="registerf" required="required" class="col-5 col-auto" value="{{cid}}"/>
+    {{/if}}
+</div>
